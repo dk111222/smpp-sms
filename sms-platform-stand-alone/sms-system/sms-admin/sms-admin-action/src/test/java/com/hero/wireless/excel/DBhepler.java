@@ -16,7 +16,7 @@ public class DBhepler {
     public void DataBase() throws SQLException {
             try {
                 Class.forName(driver);
-                con = DriverManager.getConnection(url, "root", "asdf5213volcano");
+                con = DriverManager.getConnection(url, "root", "Test930910_sms");
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                   System.err.println("装载 JDBC/ODBC 驱动程序失败。" );  
