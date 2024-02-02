@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Fri Mar 15 16:18:59 
+	CST 2019 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hero.wireless.web.dao.business.IAgentDAO">
+	<resultMap id="ResultMapExt"
+		type="com.hero.wireless.web.entity.business.ext.AgentExt"
+		extends="BaseResultMap">
+		<collection property="roles"
+			select="com.hero.wireless.web.dao.business.IAgentDAO.getRolesByAgentId"
+			column="Id" />
+		<collection property="limits"
+			select="com.hero.wireless.web.dao.business.IAgentDAO.getLimitsByAgentId"
+			column="Id" />
+		<collection property="limitOrderIds"
+			select="com.hero.wireless.web.dao.business.IAgentDAO.getLimitsByAgentIdAndOrderId"
+			column="Id" />
+	</resultMap>
+
+	<select id="selectRolesAndLimitsByAgentExample"
+		parameterType="com.hero.wireless.web.entity.business.AgentExample"
+		resultMap="ResultMapExt">
+		select *
+		from agent
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="pagination != null">
+			limit ${pagination.firstResult},${pagination.pageSize}
+		</if>
+	</select>
+	<select id="getLimitsByAgentId" parameterType="int"
+		resultMap="com.hero.wireless.web.dao.business.IAgentLimitDAO.BaseResultMap">
+		<![CDATA[ 
+			SELECT b.*
+			FROM agent_role_limit a
+			INNER JOIN agent_limit b ON a.limit_id=b.Id
+			INNER JOIN agent_roles c ON a.Role_Id=c.Role_Id
+			WHERE c.Agent_Id=#{value} ORDER BY b.Code
+		]]>
+	</select>
+
+	<select id="getLimitsByAgentIdAndOrderId" parameterType="int"
+		resultMap="com.hero.wireless.web.dao.business.IAgentLimitDAO.BaseResultMap">
+		<![CDATA[
+			SELECT b.*
+			FROM agent_role_limit a
+			INNER JOIN agent_limit b ON a.limit_id=b.Id
+			INNER JOIN agent_roles c ON a.Role_Id=c.Role_Id
+			WHERE c.Agent_Id=#{value}  ORDER BY b.Order_Id ASC
+		]]>
+	</select>
+
+	<select id="getRolesByAgentId" parameterType="int"
+	resultType="com.hero.wireless.web.entity.business.AgentRole">
+		<![CDATA[
+			SELECT b.*
+			FROM agent_roles a
+			INNER JOIN agent_role b ON a.Role_Id=b.Id
+			where a.Agent_Id=#{value}
+		]]>
+	</select>
+
+</mapper>

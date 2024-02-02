@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Fri Mar 15 16:18:09 CST 2019-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hero.wireless.web.dao.business.IAgentEnterpriseUserChargeDAO">
+  <resultMap id="BaseResultMapExt" type="com.hero.wireless.web.entity.business.ext.AgentEnterpriseUserChargeExt" extends="BaseResultMap">
+  </resultMap>
+
+    <select id="getAgentEnterpriseUserChargeListForExport" parameterType="com.hero.wireless.web.entity.business.AgentEnterpriseUserChargeExample"
+        resultType="map" >
+        SELECT a.*,
+        (SELECT b.User_Name FROM agent b WHERE b.`No` = a.Agent_No) as Agent_Name,
+        (SELECT b.`Name` FROM enterprise b WHERE b.`No` = a.Enterprise_No) as Enterprise_Name,
+        (SELECT b.Real_Name FROM enterprise_user b WHERE b.Id = a.Enterprise_User_Id) as Enterprise_User_Name
+        FROM agent_enterprise_user_charge a
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="pagination != null">
+            limit ${pagination.firstResult},${pagination.pageSize}
+        </if>
+    </select>
+</mapper>

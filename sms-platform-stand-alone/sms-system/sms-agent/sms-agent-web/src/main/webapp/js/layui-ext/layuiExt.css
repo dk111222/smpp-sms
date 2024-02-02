@@ -1,0 +1,35 @@
+.openTable-open-td {
+    background-color: #fdfdfd !important;
+}
+
+.openTable-open-td:hover {
+    background-color: white;
+}
+
+/*展开列 容器*/
+.openTable-open-item-div {
+    padding: 0 15px;
+    font-size: xx-small;
+    color: #666;
+}
+
+.overflow-hidden {
+    overflow:hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+
+.ext-tr {
+    background-color:  #f2f2f2;
+}
+
+/** 去掉tr的hover颜色 **/
+.layui-table tbody tr:nth-child(4n + 1):hover {
+    background-color: transparent;
+}.layui-table tbody tr:nth-child(4n + 2):hover {
+     background-color: transparent;
+ }
+
